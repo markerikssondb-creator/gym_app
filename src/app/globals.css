@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+
+  /* Light Theme tokens */
+  --bg-primary: #f4f4f5;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e4e4e7;
+  --bg-accent: #eff6ff;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --text-tertiary: #71717a;
+  --border-color: #d4d4d8;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-active: #2dd4bf;
+  --accent-light: #dbeafe;
+  --text-on-accent: #ffffff;
+  --success: #10b981;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --warning: #f59e0b;
+
+  /* Shadow System */
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-card-pressed: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  
+  /* Easing */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+  /* Animations */
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes stagger-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes modal-in {
+    from { opacity: 0; transform: scale(0.95) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+/* Dark Theme overrides */
+@layer base {
+  .dark {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #121212;
+    --bg-tertiary: #1a1a1a;
+    --bg-accent: #172033;
+    --text-primary: #ededed;
+    --text-secondary: #a1a1aa;
+    --text-tertiary: #71717a;
+    --border-color: #27272a;
+    --accent: #60a5fa;
+    --accent-hover: #93c5fd;
+    --accent-active: #5eead4;
+    --accent-light: #172033;
+    --text-on-accent: #0a0a0a;
+    --success: #34d399;
+    --danger: #f87171;
+    --danger-hover: #ef4444;
+    --warning: #fbbf24;
+  }
+
+  * {
+    @apply border-border-color transition-colors duration-200 ease-standard;
+  }
+
+  body {
+    @apply bg-primary text-text-primary min-h-[100dvh];
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button, a {
+    @apply transition-all duration-150 ease-spring active:scale-95 cursor-pointer outline-none;
+  }
+
+  button:active, a:active {
+    @apply transition-none;
+  }
+
+  input, select, textarea {
+    @apply bg-bg-secondary border border-border-color rounded-xl px-4 py-3 text-text-primary transition-all duration-150 outline-none focus:border-accent;
+  }
+
+  /* Hide number spinners */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in { animation: fade-in 300ms var(--ease-out) forwards; }
+  .animate-slide-up { animation: slide-up 400ms var(--ease-spring) forwards; }
+  .animate-stagger-in { animation: stagger-in 400ms var(--ease-spring) forwards; }
+  .animate-modal-in { animation: modal-in 300ms var(--ease-spring) forwards; }
+  
+  .bg-accent {
+    background-color: var(--bg-accent) !important;
+  }
+  .bg-accent:active {
+    background-color: var(--accent-active) !important;
+  }
+
+  .card-depth {
+    @apply bg-bg-secondary rounded-2xl border border-border-color shadow-card hover:shadow-card-hover hover:translate-y-[-2px] active:shadow-card-pressed active:translate-y-[0px] transition-all duration-300 ease-spring;
+  }
+
+  .glass-nav {
+    @apply bg-opacity-90 dark:bg-opacity-92 backdrop-blur-xl border-t border-border-color;
+    background-color: var(--glass-bg, rgba(255,255,255,0.9));
+  }
+  .dark .glass-nav {
+    background-color: var(--glass-bg, rgba(18,18,18,0.92));
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden bg-bg-tertiary rounded-md;
+  }
+  .skeleton::after {
+    @apply absolute inset-0 content-[''];
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-border-color rounded-full;
+}
