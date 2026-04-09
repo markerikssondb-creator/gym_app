@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { LogIn } from 'lucide-react';
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { login, error, clearError } = useAuth();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[80vh] px-4 animate-fade-in">
@@ -19,6 +19,23 @@ export default function LoginPage() {
             Track your progress, build your body, and maintain the aesthetic.
           </p>
         </div>
+
+        {error && (
+          <div className="w-full p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex flex-col gap-2">
+            <p className="text-red-500 text-xs font-bold uppercase tracking-wider text-center">
+              Login failed
+            </p>
+            <p className="text-text-primary text-sm text-center">
+              {error}
+            </p>
+            <button 
+              onClick={clearError}
+              className="text-[10px] text-text-tertiary uppercase font-black hover:text-text-primary transition-colors"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
 
         <button 
           onClick={login}
